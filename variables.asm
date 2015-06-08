@@ -1,5 +1,5 @@
-VARIABLES		;{
 				cblock	0x20
+VARIABLES		;{
 deviceID:		1
 
 iInSampleLo:	1
@@ -121,4 +121,5 @@ functionRam2:	0x50
 				
 				cblock	0x1f0	; clone of 0x1f0-0x1ff
 clone70_7f_3:	0x10
-				endc	;}
+				endc
+;}

@@ -13,7 +13,7 @@ fPowerOff1		clrf	outputLo
 				scall	clearRam2
 				goto	parseRxE
 				;}
-				
+
 fReset			;{
 				movfw	rxByte2
 				xorlw	0xff			; global reset
@@ -22,17 +22,17 @@ fReset			;{
 				xorwf	deviceID,w		; only this device
 				skpz
 				goto	parseRxE
-				
+
 fReset1			pcall	safeOutput
 				goto	0x0000
 				;}
-				
+
 fPoll			;{
 ; return ACK if we are polled
 				movfw	rxByte2
 				xorwf	deviceID,w		; our deviceID
 				bnz		parseRxE		; no
-	
+
 				movlw	STARTBYTE		; startByte
 				pcall	putTx
 				movlw	CMDACK			; send ACK
@@ -95,7 +95,7 @@ fOn				;{
 				movwf	funcUber
 				bsf		funcUber,4		; use the output
 				goto	fOn2
-				
+
 fOn1			movfw	rxByte2
 				andlw	0x01
 				skpz
@@ -120,12 +120,12 @@ fOn2			bsf		funcUber,7		; set on mode
 				clrf	funcUber		; set non service mode
 				goto	parseRxE
 				;}
-				
+
 fRdTime			;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movlw	STARTBYTE		; startByte
 				pcall	putTx
 				movlw	CMDTGACK		; send ACK
@@ -154,7 +154,7 @@ fWrTime			;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 fWrTime1		pcall	getRx			; receive time
 				bz		fWrTime1
 				movwf	time
@@ -247,7 +247,7 @@ fCOutput		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movfw	rxByte1
 				andlw	0x0f
 				pcall	genBitmask		; generate bitmask for output
@@ -255,12 +255,12 @@ fCOutput		;{
 
 				goto	parseRxE
 				;}
-				
+
 fSOutput		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movfw	rxByte1
 				andlw	0x0f
 				pcall	genBitmask		; generate bitmask for output
@@ -268,12 +268,12 @@ fSOutput		;{
 
 				goto	parseRxE
 				;}
-				
+
 fWrOutputs		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		fWrOutputs3		; not us
-				
+
 fWrOutputs1		pcall	getRx
 				bz		fWrOutputs1
 				movwf	outputLo
@@ -294,7 +294,7 @@ fRdInput		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movlw	STARTBYTE		; startByte
 				pcall	putTx
 				movlw	CMDIOANS		; send answer
@@ -309,7 +309,7 @@ fRdInput		;{
 				movfw	iInputLo		; check lo input
 				andwf	bitmaskLo,w
 				bnz		fRdInput1
-				
+
 				movfw	iInputHi		; check hi input
 				andwf	bitmaskHi,w
 				bnz		fRdInput1
@@ -331,7 +331,7 @@ fRdInputs		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movlw	STARTBYTE		; startByte
 				pcall	putTx
 				movlw	CMDIOANS		; send answer
@@ -350,7 +350,7 @@ fRdOutput		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movlw	STARTBYTE		; startByte
 				pcall	putTx
 				movlw	CMDIOANS		; send answer
@@ -365,7 +365,7 @@ fRdOutput		;{
 				movfw	outputLo		; check lo output
 				andwf	bitmaskLo,w
 				bnz		fRdOutput1
-				
+
 				movfw	outputHi		; check hi output
 				andwf	bitmaskHi,w
 				bnz		fRdOutput1
@@ -387,7 +387,7 @@ fRdOutputs		;{
 				movfw	rxByte2
 				xorwf	deviceID,w		; only this device
 				bnz		parseRxE		; not us
-				
+
 				movlw	STARTBYTE		; startByte
 				pcall	putTx
 				movlw	CMDIOANS		; send answer

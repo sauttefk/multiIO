@@ -3,7 +3,7 @@
 	ERRORLEVEL -306, -302
 
 #define			revision	4
-#define			device 		0x0d
+#define			device 		0x4d
 #define			bits89		8
 
  ifdef	__DEBUG
@@ -11,7 +11,7 @@
 	messg	"Debug mode"
  else
 	__CONFIG	0x13c4		; w/o debugger
-;	__CONFIG	0x03c4		; w/o debugger
+;	__CONFIG	0x03e4		; debugger
  endif
 
 
@@ -29,7 +29,6 @@
 ;**************** Interrupt service routine **************************
 				org		0x004			; interrupt vector locaton
 #include		<interrupt.asm>
-#include		<iutils.asm>
 				;{
 				org		0x0800			; second page
 main
@@ -324,7 +323,6 @@ endless			goto	parseRx			;}
 
 
 #include		<dispatch.asm>
-#include		<parserx.asm>
 #include		<functions.asm>
 #include		<uberfunctions.asm>
 #include		<serial.asm>

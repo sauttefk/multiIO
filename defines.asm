@@ -74,17 +74,17 @@ DEFINES			;{
 
 #define	CMDOWR		0x05 ;| 0x05  | ID    | lbyte | hbyte |  ok  | write outputs on device ID
 #define CMDIRD		0x06 ;| 0x06  | ID    |       |       |  ok  | read inputs on device ID
-#define CMDORD		0x07 ;| 0x06  | ID    |       |       |  ok  | read outputs on device ID
-#define CMDIOANS	0x08 ;| 0x07  | ID    | lbyte | hbyte |  ok  | 2 bytes read inputs answer
+#define CMDORD		0x07 ;| 0x07  | ID    |       |       |  ok  | read outputs on device ID
+#define CMDIOANS	0x08 ;| 0x08  | ID    | lbyte | hbyte |  ok  | 2 bytes read inputs answer
 
-#define	CMDTSET		0x09 ;| 0x08  | ID    |       |       |  ok  | write time of device ID
-					     ;| 0x08  | 0xFF  |       |       |  ok  | write time global
-#define	CMDTGET		0x0A ;| 0x09  | ID    |       |       |  ok  | read time of device ID
-#define	CMDTGACK	0x0B ;| 0x0A  | ID    |       |       |  ok  | 5 bytes read time answer
+#define	CMDTSET		0x09 ;| 0x09  | ID    |       |       |  ok  | write time of device ID
+					     ;| 0x09  | 0xFF  |       |       |  ok  | write time global
+#define	CMDTGET		0x0A ;| 0x0A  | ID    |       |       |  ok  | read time of device ID
+#define	CMDTGACK	0x0B ;| 0x0B  | ID    |       |       |  ok  | 5 bytes read time answer
 
-#define	CMDCGET		0x0C ;| 0x0B  | ID    |       |       |  ok  | read configuration of device ID
-#define	CMDCGACK	0x0D ;| 0x0C  | ID    |       |       |  ok  | 255 bytes read configuration answer
-#define	CMDCSET		0x0E ;| 0x0D  | ID    |       |       |  ok  | 256 bytes write configuration of device ID
+#define	CMDCGET		0x0C ;| 0x0C  | ID    |       |       |  ok  | read configuration of device ID
+#define	CMDCGACK	0x0D ;| 0x0D  | ID    |       |       |  ok  | 255 bytes read configuration answer
+#define	CMDCSET		0x0E ;| 0x0E  | ID    |       |       |  ok  | 256 bytes write configuration of device ID
 #define CMDNEEDCFG	0x0F ;| 0x0F  | 0xFF  |       |       |      | need config (after pressing key)
 
 #define	CMDPEDGE	0x10 ;| 0x1Y  | ID    |       |       |  ok  | positive edge on input Y on device ID

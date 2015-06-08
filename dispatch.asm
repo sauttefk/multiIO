@@ -25,7 +25,7 @@ dispatchLoop	movlw	prescale_Mode
 				movwf	temp1
 
 				bcf		funcUber,5		; clear second input matched semaphore
-				
+
 				movlw	output
 				addwf	paramPtr1,w
 				longcall	eeRead
@@ -41,9 +41,9 @@ dispatchLoop	movlw	prescale_Mode
 				movfw	paramPtr2
 				addlw	-0x6e
 				bnc		dispatchLoop1
-				movlw	0x32	
+				movlw	0x32
 				addwf	paramPtr2,f
-				
+
 dispatchLoop1	swapf	funcOutBits,w	; get pointer to parameter ram of output 2
 				andlw	0x0f
 				movwf	paramPtr3
@@ -55,7 +55,7 @@ dispatchLoop1	swapf	funcOutBits,w	; get pointer to parameter ram of output 2
 				movfw	paramPtr3
 				addlw	-0x6e
 				bnc		dispatchLoop2
-				movlw	0x32	
+				movlw	0x32
 				addwf	paramPtr3,f
 
 dispatchLoop2	movfw	temp1			; number of eeprom parameters
@@ -65,42 +65,46 @@ dispatchLoop2	movfw	temp1			; number of eeprom parameters
 				btfsc	funcUber,6		; test if in service mode
 				goto	dispatchLoop4	; we are in service mode => no device id parameters nedded
 
+				movlw	input           ; get input ports for later match
+				addwf	paramPtr1,w
+				longcall	eeRead
+				banksel	funcTypeInput
+				movwf	funcTypeInput	; input port1 (low nibble), input port2 (high nibble)
+
 				movlw	devID1
 				addwf	paramPtr1,w
 				longcall	eeRead
 				banksel	funcDevID1
 				movwf	funcDevID1		; device ID 1
 				xorwf	rxDevID,w
-				bnz		dispatchLoop3
+				bnz		dispatchLoop3   ; device ID 1 does not match; next test for device ID 2
 
-				movlw	input
-				addwf	paramPtr1,w
-				longcall	eeRead
-				banksel	funcTypeInput
-				movwf	funcTypeInput	; input port1 (low nibble), input port2 (high nibble)
+				banksel	funcTypeInput	; device ID 1 matched
+				movfw	funcTypeInput	; input port1 (low nibble), input port2 (high nibble)
 				xorwf	rxInput,w
-				andlw	0x0f
-				bz		dispatchLoop4
-				
+				andlw	0x0f            ; check port1 (low nibble)
+				bz		dispatchLoop4   ; port 1 matched
+
 dispatchLoop3	movfw	temp1			; number of eeprom parameters
 				xorlw	0x06
 				bnz		dispatchCont	; no device ID2 parameter needed
-				
+
 				movlw	devID2
 				addwf	paramPtr1,w
 				longcall	eeRead
 				banksel	funcDevID2
 				movwf	funcDevID2		; device ID 2
 				xorwf	rxDevID,w
-				bnz		dispatchCont
+				bnz		dispatchCont    ; device ID 2 does not match; continue with next parameter set
 
+				banksel	funcTypeInput	; device ID 2 matched
 				swapf	funcTypeInput,w	; input port1 (low nibble), input port2 (high nibble)
 				xorwf	rxInput,w
 				andlw	0x0f
-				bnz		dispatchCont
+				bnz		dispatchCont    ; port 2 does not match
 
 				bsf		funcUber,5		; set second input matched semaphore
-				
+
 dispatchLoop4	movfw	temp1
 				addlw	-0x05
 				bnc		dispatchLoop5	; less than 5 parameters needed
@@ -129,16 +133,16 @@ dispatchLoop5	movfw	funcPrescMode
 				return					; mode c - nop
 				goto	fAwning			; mode d - awning (output1: on/off output2: open/close)
 				goto	fBlind			; mode e - blind (output1: on/off output2: up/down)
-				goto	fWindow			; mode f - window (output1: down output2: close)
+				goto	fWindow			; mode f - window (output1: open output2: close)
 
 dispatchCont	pcall	numParameter
 				addwf	paramPtr1,f
 				goto	dispatchLoop
-				
+
 numParameter	clrf	temp2
 				movfw	funcPrescMode
 				andlw	0xf0
-				skpz	
+				skpz
 				bsf		temp2,4
 				movfw	funcPrescMode
 				andlw	0x0f
@@ -160,7 +164,7 @@ numParameter	clrf	temp2
 				retlw	0x00			; mode c - nop
 				retlw	0x06			; mode d - awning (output1: on/off output2: open/close)
 				retlw	0x06			; mode e - blind (output1: on/off output2: up/down)
-				retlw	0x06			; mode f - window (output1: down output2: close)
+				retlw	0x06			; mode f - window (output1: open output2: close)
 				;prescale set
 				retlw	0x00			; mode 0+ - exit
 				retlw	0x04			; mode 1+ - passthrough
@@ -177,4 +181,4 @@ numParameter	clrf	temp2
 				retlw	0x00			; mode c+ - nop
 				retlw	0x06			; mode d+ - awning (output1: on/off output2: open/close)
 				retlw	0x06			; mode e+ - blind (output1: on/off output2: up/down)
-				retlw	0x06			; mode f+ - window (output1: down output2: close)
+				retlw	0x06			; mode f+ - window (output1: open output2: close)
