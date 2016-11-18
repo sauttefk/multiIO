@@ -38,6 +38,12 @@ DEBUGGABLE_SUFFIX=cof
 FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/multiIO.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
+ifeq ($(COMPARE_BUILD), true)
+COMPARISON_BUILD=
+else
+COMPARISON_BUILD=
+endif
+
 # Object Directory
 OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 
@@ -83,27 +89,27 @@ MP_LINKER_DEBUG_OPTION=-r=ROM@0x1F00:0x1FFE -r=RAM@SHARE:0x70:0x70 -r=RAM@SHARE:
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 ${OBJECTDIR}/multiIO.o: multiIO.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
+	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/multiIO.o.d 
 	@${RM} ${OBJECTDIR}/multiIO.o 
-	@${FIXDEPS} dummy.d -e "/Users/sauttefk/MPLABXProjects/multiIO/multiIO.ERR" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  $(ASM_OPTIONS)   \\\"/Users/sauttefk/MPLABXProjects/multiIO/multiIO.asm\\\" 
-	@${MV}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.O ${OBJECTDIR}/multiIO.o
-	@${MV}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.ERR ${OBJECTDIR}/multiIO.o.err
-	@${MV}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.LST ${OBJECTDIR}/multiIO.o.lst
-	@${RM}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.HEX 
+	@${FIXDEPS} dummy.d -e "/Users/sauttefk/Documents/mpLab/multiIO/multiIO.ERR" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  $(ASM_OPTIONS)    \\\"/Users/sauttefk/Documents/mpLab/multiIO/multiIO.asm\\\" 
+	@${MV}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.O ${OBJECTDIR}/multiIO.o
+	@${MV}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.ERR ${OBJECTDIR}/multiIO.o.err
+	@${MV}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.LST ${OBJECTDIR}/multiIO.o.lst
+	@${RM}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.HEX 
 	@${DEP_GEN} -d "${OBJECTDIR}/multiIO.o"
 	@${FIXDEPS} "${OBJECTDIR}/multiIO.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 else
 ${OBJECTDIR}/multiIO.o: multiIO.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
+	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/multiIO.o.d 
 	@${RM} ${OBJECTDIR}/multiIO.o 
-	@${FIXDEPS} dummy.d -e "/Users/sauttefk/MPLABXProjects/multiIO/multiIO.ERR" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  $(ASM_OPTIONS)   \\\"/Users/sauttefk/MPLABXProjects/multiIO/multiIO.asm\\\" 
-	@${MV}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.O ${OBJECTDIR}/multiIO.o
-	@${MV}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.ERR ${OBJECTDIR}/multiIO.o.err
-	@${MV}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.LST ${OBJECTDIR}/multiIO.o.lst
-	@${RM}  /Users/sauttefk/MPLABXProjects/multiIO/multiIO.HEX 
+	@${FIXDEPS} dummy.d -e "/Users/sauttefk/Documents/mpLab/multiIO/multiIO.ERR" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  $(ASM_OPTIONS)    \\\"/Users/sauttefk/Documents/mpLab/multiIO/multiIO.asm\\\" 
+	@${MV}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.O ${OBJECTDIR}/multiIO.o
+	@${MV}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.ERR ${OBJECTDIR}/multiIO.o.err
+	@${MV}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.LST ${OBJECTDIR}/multiIO.o.lst
+	@${RM}  /Users/sauttefk/Documents/mpLab/multiIO/multiIO.HEX 
 	@${DEP_GEN} -d "${OBJECTDIR}/multiIO.o"
 	@${FIXDEPS} "${OBJECTDIR}/multiIO.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
