@@ -3,15 +3,15 @@
     ERRORLEVEL -306, -302
 
 #define         revision    4
-#define         device      0x4d
+#define         device      0x01
 #define         bits89      8
+#define		baudrate    .115200
 
  ifdef  __DEBUG
-    __CONFIG    0x13e4      ; debugger
+    __CONFIG    0x03f4      ; debugger
     messg   "Debug mode"
  else
     __CONFIG    0x13c4      ; w/o debugger
-;   __CONFIG    0x03e4      ; debugger
  endif
 
 
@@ -49,6 +49,59 @@ main
                 banksel OSCCON
                 movlw   0x71            ; speedup to 8 MHz
                 movwf   OSCCON
+
+#if baudrate == .115200
+		banksel OSCTUNE
+;		movlw	.15		; increase speed by  15 = 8.889MHz for better baudrate accuracy
+;		movlw	.14		; increase speed by  14 = 8.831MHz for better baudrate accuracy
+;		movlw	.13		; increase speed by  13 = 8.768MHz for better baudrate accuracy
+;		movlw	.12		; increase speed by  12 = 8.709MHz for better baudrate accuracy
+;		movlw	.11		; increase speed by  11 = 8.650MHz for better baudrate accuracy
+;		movlw	.10		; increase speed by  10 = 8.592MHz for better baudrate accuracy
+;		movlw	.9		; increase speed by   9 = 8.529MHz for better baudrate accuracy
+;		movlw	.8		; increase speed by   8 = 8.470MHz for better baudrate accuracy
+;		movlw	.7		; increase speed by   7 = 8.414MHz for better baudrate accuracy
+;		movlw	.6		; increase speed by   6 = 8.355MHz for better baudrate accuracy
+;		movlw	.5		; increase speed by   5 = 8.293MHz for better baudrate accuracy
+;		movlw	.4		; increase speed by   4 = 8.234MHz for better baudrate accuracy
+;		movlw	.3		; increase speed by   3 = 8.175MHz for better baudrate accuracy
+;		movlw	.2		; increase speed by   2 = 8.117MHz for better baudrate accuracy
+;		movlw	.1		; increase speed by   1 = 8.054MHz for better baudrate accuracy
+;		movlw	.0		; normal speed      0 = 7.994MHz
+;		movlw	-.1		; reduce speed by  -1 = 7.946MHz for better baudrate accuracy
+;		movlw	-.2		; reduce speed by - 2 = 7.887MHz for better baudrate accuracy
+;		movlw	-.3		; reduce speed by  -3 = 7.824MHz for better baudrate accuracy
+;		movlw	-.4		; reduce speed by  -4 = 7.766MHz for better baudrate accuracy
+;		movlw	-.5		; reduce speed by  -5 = 7.708MHz for better baudrate accuracy
+;		movlw	-.6		; reduce speed by  -6 = 7.650MHz for better baudrate accuracy
+;		movlw	-.7		; reduce speed by  -7 = 7.587MHz for better baudrate accuracy
+;		movlw	-.8		; reduce speed by  -8 = 7.528MHz for better baudrate accuracy
+;		movlw	-.9		; reduce speed by  -9 = 7.473MHz for better baudrate accuracy
+;		movlw	-.10		; reduce speed by -10 = 7.415MHz for better baudrate accuracy
+		movlw	-.11		; reduce speed by -11 = 7.352MHz for better baudrate accuracy
+;		movlw	-.12		; reduce speed by -12 = 7.294MHz for better baudrate accuracy
+;		movlw	-.13		; reduce speed by -13 = 7.236MHz for better baudrate accuracy
+;		movlw	-.14		; reduce speed by -14 = 7.178MHz for better baudrate accuracy
+;		movlw	-.15		; reduce speed by -15 = 7.116MHz for better baudrate accuracy
+;		movlw	-.16		; reduce speed by -16 = 7.058MHz for better baudrate accuracy
+                movwf   OSCTUNE
+#define         XTAL_FREQ   .7352000	; OSC freq in Hz
+#else
+#if baudrate == .57600
+		banksel OSCTUNE
+		movlw	.5		; increase speed by   5 = 8.293MHz for better baudrate accuracy
+                movwf   OSCTUNE
+#define         XTAL_FREQ   .8293000	; OSC freq in Hz
+#else
+		banksel OSCTUNE
+		movlw	.0		; normal speed      0 = 7.994MHz (nominal 8.000MHz)
+                movwf   OSCTUNE
+#define         XTAL_FREQ   .8000000	; OSC freq in Hz
+#endif
+#endif
+ messg   Selected CPU Frequency : XTAL_FREQ MHz
+ #define rate	CALC_HIGH_BAUD(baudrate)
+ messg   rate
 
                 scall   initPorts
                 scall   clearRam

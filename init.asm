@@ -291,10 +291,7 @@ initUart        ;{
 ; furthermore its advised that interrupts are disabled during this routine
 
                 ; setup baudrate
-;               movlw   CALC_HIGH_BAUD(57600)   ; BAUD_57600 ; get baudrate
-;               movlw   BAUD_57600
-                movlw   BAUD_38400
-;               movlw   BAUD_19200
+                movlw   CALC_HIGH_BAUD(baudrate)        ; get baudrate
                 banksel SPBRG
                 movwf   SPBRG
 
@@ -359,10 +356,11 @@ initTimer2      ;{
 ;  prescaler and timer2 set to 500µs => 2kHz
 ;  postscaler 1:4 => 500Hz
                 banksel PR2
-                movlw   0xf9            ; 249 => 1:250
+;                movlw   0xf9            ; 249 => 1:250
+		movlw   CALC_TIMER(.500)    ; 500Hz 
                 movwf   PR2
                 banksel T2CON
-                movlw   0x19            ; 1:4 prescale ; 1:5 postscale; timer2 off
+                movlw   0x19            ; 1:4 prescale ; 1:4 postscale; timer2 off
                 movwf   T2CON
                 banksel PIR1
                 bcf     PIR1,TMR2IF     ; clear timer2 interrupt flag

@@ -1,11 +1,4 @@
 DEFINES         ;{
-#define         XTAL_FREQ       .8000000        ; OSC freq in Hz
-
-#define         BAUD_9600       .50
-#define         BAUD_19200      .25
-#define         BAUD_38400      .12
-#define         BAUD_57600      .08
-
 #define         BUFSIZE         0x20
                 IF  (BUFSIZE&(BUFSIZE-1))
                     ERROR "BUFSIZE MUST BE A POWER OF 2"
@@ -15,13 +8,12 @@ DEFINES         ;{
                     ERROR "MSGBUFSIZE MUST BE A POWER OF 2"
                 ENDIF
 
+; caulculates baudrate when BRGH = 1, adjust for rounding errors (XTAL_FREQ / (16 * BaudRate)) - 0.5
+#define         CALC_HIGH_BAUD(BaudRate)    (XTAL_FREQ + .8 * BaudRate) / (.16 * BaudRate) - .1;
 
-; caulculates baudrate when BRGH = 1, adjust for rounding errors
-#define         CALC_HIGH_BAUD(BaudRate)    (XTAL_FREQ/(16*BaudRate))-.5
-; caulculates baudrate when BRGH = 0, adjust for rounding errors
-#define         CALC_LOW_BAUD(BaudRate)     (((10*XTAL_FREQ/(64*BaudRate))+5)/10)-1
-; caulculates timer1 delay when prescale is 1:8, adjust for rounding errors
-#define         CALC_TIMER(TickTime)    (0xFFFF-((TickTime*XTAL_FREQ)/32000))+1
+		; caulculates timer1 delay when prescale is 1:4, postscale is 1:4
+;#define         CALC_TIMER(TickTime)    (0xFFFF - ((TickTime * XTAL_FREQ) / .32000)) + .1
+#define		CALC_TIMER(TickTime)	(XTAL_FREQ / .64 / TickTime) - .1
 
 #define         prescale_Mode   0
 #define         output          1
