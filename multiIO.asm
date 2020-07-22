@@ -5,7 +5,8 @@
 #define         revision    4
 #define         device      0x01
 #define         bits89      8
-#define		baudrate    .115200
+#define         baudrate    .38400    
+;#define         baudrate    .115200
 
  ifdef  __DEBUG
     __CONFIG    0x03f4      ; debugger
