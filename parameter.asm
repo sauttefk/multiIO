@@ -160,16 +160,15 @@ actionbase      equ     $-PARAMBASE
     de  0xb4,0x06,0x05,0x0e,0x96        ; Windfang Tür LED 1 - Garage Decke 1 - Garage C - 80min
     de  0x74,0x06,0x04,0x0e,0x96        ; Windfang Tür LED 1 - Garage Decke 1 - Garage B - 5min
     de  0x74,0x06,0x06,0x03,0x96        ; Windfang Tür LED 1 - Garage Decke 1 - Windfang Tür B - 5min
-;    de  0x03,0x07                       ; Windfang Tür LED 2 - Dauer ein
-    de  0x39,0x06,0x09,0x0e,0x01,0x40   ; Windfang Tür LED 2 - Garagentor offen blink
+    de  0x68,0x01,0x07,0x10,0x96        ; Garage Decke 2 - Antrieb Licht - timer 2.5min
+    de  0x39,0x07,0x16,0x10,0x02,0x20   ; Windfang Tür LED 2 - Garagentor offen blink inverse
     de  0xb4,0x08,0x08,0x03,0xe1        ; Windfang Tür LED 3 - Windfang Tür C - Kontrolle Außen NO - 120min
     de  0xb4,0x09,0x09,0x03,0xe1        ; Windfang Tür LED 4 - Windfang Tür D - Kontrolle Außen Eingang - 120min
     de  0x04,0x0a,0x09,0x0f             ; Wohnen Wand Ost-Nord - Wohnen Süd J
     de  0x04,0x0b,0x08,0x0f             ; Wohnen Wand Ost-Süd - Wohnen Süd K
     de  0xa4,0x0c,0x07,0x07,0xe1        ; Schrank Downlights - Schrank Tür A 60min
-    de  0x04,0x0d,0x0c,0x07             ; Elternbad Spiegel
-    de  0x02,0x0e                       ; Elternbad Decke 1
-    de  0x02,0x0f                       ; Elternbad Decke 2
+    de  0x04,0x0d,0x0c,0x07             ; Elternbad Spiegel - Elternbad Tür E
+    de  0xa5,0xfe,0x0d,0x07,0xe1        ; Elternbad Decke 1 & 2 - Elternbad Tür F 60min
  endif
 
 
@@ -195,17 +194,16 @@ actionbase      equ     $-PARAMBASE
     de  0x02,0x00                       ; Küche Ost LED 1 - Dauer aus
     de  0x03,0x01                       ; Küche Ost LED 2 - Dauer ein
     de  0x02,0x02                       ; Küche Ost LED 3 - Dauer aus
-    de  0x39,0x03,0x09,0x0e,0x01,0x40   ; Küche Ost LED 4 - Garagentor offen blink
+    de  0x39,0x03,0x06,0x10,0x01,0x40   ; Küche Ost LED 4 - Garagentor offen blink
     de  0x05,0x54,0x00,0x08             ; Eltern Decke 1&2 - Eltern Tür A
     de  0x56,0x54,0x0d,0x08,0x28        ; Eltern Decke 1&2 - Eltern NW F
     de  0x56,0x54,0x01,0x09,0x28        ; Eltern Decke 1&2 - Eltern NO B
-    de  0x56,0x54,0x0d,0x07,0x28        ; Eltern Decke 1&2 - Elternbad B
+    de  0x56,0x54,0x0e,0x07,0x28        ; Eltern Decke 1&2 - Elternbad B
     de  0x04,0x06,0x02,0x08             ; Eltern Wand NW - Eltern Tür C
     de  0x04,0x06,0x0c,0x08             ; Eltern Wand NW - Eltern NW E
-    de  0x04,0x06,0x0e,0x07             ; Eltern Wand NW - Elternbad Tür G
+    de  0x04,0x06,0x0f,0x07             ; Eltern Wand NW - Elternbad Tür G
     de  0x04,0x07,0x03,0x08             ; Eltern Wand NO - Eltern Tür D
     de  0x04,0x07,0x00,0x09             ; Eltern Wand NO - Eltern NW E
-    de  0x04,0x07,0x0f,0x07             ; Eltern Wand NO - Elternbad Tür H
     de  0x02,0x08                       ; Essen Ost LED 1 - Dauer aus
     de  0x03,0x09                       ; Essen Ost LED 2 - Dauer ein
     de  0x02,0x0a                       ; Essen Ost LED 3 - Dauer aus
@@ -578,7 +576,7 @@ actionbase      equ     $-PARAMBASE
     de  0x5e,0x76,0xfe,0x0b,0x81,0x0b   ; J Kind1 Süd - Kind1 Bett K/L
     de  0x5e,0x76,0x76,0x09,0x81,0x09   ; J Kind1 Süd - Eltern Bett NO G/H
     de  0x5e,0x76,0x0e,0x0e,0x81,0xf0   ; J Kind1 Süd - Wind auf
-    de  0x02,0x08			; Kind 2 Bett LED 1 - Dauer aus
+    de  0x02,0x08			            ; Kind 2 Bett LED 1 - Dauer aus
     de  0x02,0x09                       ; Kind 2 Bett LED 2 - Dauer aus
     de  0x02,0x0a                       ; Kind 2 Bett LED 3 - Dauer aus
     de  0x02,0x0b                       ; Kind 2 Bett LED 4 - Dauer aus
@@ -628,7 +626,7 @@ actionbase      equ     $-PARAMBASE
     de  0x02,0x0b                       ; Kind 3 Bett LED 4 - Dauer aus
     de  0x5d,0xdc,0xef,0x05,0x81,0x05   ; J Sonnensegel - Esszimmer P/O
     de  0x5d,0xdc,0xe0,0xf0,0x81,0x0e   ; J Sonnensegel - Wind zu
-;   de  0x5f,0xef,0x76,0x0a,0x81,0x0a   ; F Kinderbad - Tür Kinderbad G/H
+    de  0x5f,0xef,0x76,0x0a,0x81,0x0a   ; F Kinderbad - Tür Kinderbad G/H
     de  0x5f,0xef,0x98,0x08,0x81,0x08   ; F Kinderbad - Eltern Bett NW A/B
     de  0x5f,0xef,0xd0,0xf0,0x81,0x0e   ; F Kinderbad - Regen zu
     de  0x5f,0xef,0xe0,0xf0,0x81,0x0e   ; F Kinderbad - Wind zu
@@ -640,23 +638,23 @@ actionbase      equ     $-PARAMBASE
 ;I0E.0  Abstellk. Tür A     O0E.0   Rd21    F Flur OG SO zu
 ;I0E.1  untere Bühne Tür A  O0E.1   Re21    F Flur OG SO auf
 ;I0E.2  obere Bühne Tür A   O0E.2   Rd22    F Flur OG S zu
-;I0E.3  Garage Tür A        O0E.3   Rd23    F Flur OG S auf
-;I0E.4  Garage Tür B        O0E.4   Rd23    F Flur OG SW zu
-;I0E.5  Garage Tür C        O0E.5   Re23    F Flur OG SW auf
-;I0E.6  Garage Tür D        O0E.6           · reserve ·
-;I0E.7  Garage Schlüssel    O0E.7           · reserve ·
-;I0E.8  Garage Lichtschr.   O0E.8           Garage EinfahrLED
-;I0E.9  Garage Endposition  O0E.9           · reserve ·
-;I0E.A  Garage Antriebsl.   O0E.A           · reserve ·
+;I0E.3  · reserve ·         O0E.3   Rd23    F Flur OG S auf
+;I0E.4  · reserve ·         O0E.4   Rd23    F Flur OG SW zu
+;I0E.5  · reserve ·         O0E.5   Re23    F Flur OG SW auf
+;I0E.6  · reserve ·         O0E.6           · reserve ·
+;I0E.7  · reserve ·         O0E.7           · reserve ·
+;I0E.8  · reserve ·         O0E.8           Garage EinfahrLED
+;I0E.9  · reserve ·         O0E.9           · reserve ·
+;I0E.A  · reserve ·         O0E.A           · reserve ·
 ;I0E.B  Wächter Sonne       O0E.B           · reserve ·
 ;I0E.C  Wächter Dämmerung   O0E.C           · reserve ·
 ;I0E.D  Wächter Regen       O0E.D           · reserve ·
 ;I0E.E  Wächter Wind        O0E.E           · reserve ·
 ;I0E.F  Wächter Frost       O0E.F           · reserve ·
 ; prescale+mode | output | input | device1 | delay(opt) | device2
-;   de  0x5f,0x01,0xfe,0x09,0x81,0x09   ; F Flur OG SO - Flur OG Süd C/D
-;   de  0x5f,0x23,0xfe,0x09,0x81,0x09   ; F Flur OG S - Flur OG Süd C/D
-;   de  0x5f,0x45,0xfe,0x09,0x81,0x09   ; F Flur OG SW - Flur OG Süd C/D
+    de  0x5f,0x01,0xfe,0x09,0x81,0x09   ; F Flur OG SO - Flur OG Süd C/D
+    de  0x5f,0x23,0xfe,0x09,0x81,0x09   ; F Flur OG S - Flur OG Süd C/D
+    de  0x5f,0x45,0xfe,0x09,0x81,0x09   ; F Flur OG SW - Flur OG Süd C/D
     de  0x5f,0x01,0xba,0x08,0x81,0x08   ; F Flur OG SO - Eltern Bett NW C/D
     de  0x5f,0x01,0xd0,0xf0,0x81,0x0e   ; F Flur OG SO - Regen zu
     de  0x5f,0x01,0xe0,0xf0,0x81,0x0e   ; F Flur OG SO - Wind zu
@@ -666,16 +664,16 @@ actionbase      equ     $-PARAMBASE
     de  0x5f,0x45,0xba,0x08,0x81,0x08   ; F Flur OG SW - Eltern Bett NW C/D
     de  0x5f,0x45,0xd0,0xf0,0x81,0x0e   ; F Flur OG SW - Regen zu
     de  0x5f,0x45,0xe0,0xf0,0x81,0x0e   ; F Flur OG SW - Wind zu
-    de  0x02,0x06			; · reserve · - Dauer aus
-    de  0x02,0x07			; · reserve · - Dauer aus
+    de  0x02,0x06                       ; · reserve · - Dauer aus
+    de  0x02,0x07                       ; · reserve · - Dauer aus
     de  0x49,0x08,0x08,0x0e,0x01,0x0d   ; Garage EinfahrLED - Garage Lichtschranke
-    de  0x02,0x09			; · reserve · - Dauer aus
-    de  0x02,0x0a			; · reserve · - Dauer aus
-    de  0x02,0x0b			; · reserve · - Dauer aus
-    de  0x02,0x0c			; · reserve · - Dauer aus
-    de  0x02,0x0d			; · reserve · - Dauer aus
-    de  0x02,0x0e			; · reserve · - Dauer aus
-    de  0x02,0x0f			; · reserve · - Dauer aus
+    de  0x02,0x09                       ; · reserve · - Dauer aus
+    de  0x02,0x0a                       ; · reserve · - Dauer aus
+    de  0x02,0x0b                       ; · reserve · - Dauer aus
+    de  0x02,0x0c                       ; · reserve · - Dauer aus
+    de  0x02,0x0d                       ; · reserve · - Dauer aus
+    de  0x02,0x0e                       ; · reserve · - Dauer aus
+    de  0x02,0x0f                       ; · reserve · - Dauer aus
  endif
 
 
@@ -718,6 +716,54 @@ actionbase      equ     $-PARAMBASE
 
 
 
+ if device == 0x10
+;Input  Raum Position       Output  Relais  Raum Position
+;I10.0  Garage A            O10.0   Rf01    Garage  Decke 1
+;I10.1  Garage B            O10.1   Rf02    Garage  Decke 2
+;I10.2  Garage C            O10.2   Rf03    Außen   Garage
+;I10.3  Garage D            O10.3   Rf04    · reserve ·
+;I10.4  Garage Schlüssel    O10.4   Rf05    Zysterne Pumpe
+;I10.5  Garage Lichtschr.   O10.5   Rf06    Garagentor Up/Stop/Down
+;I10.6  Garage Endposition  O10.6   Oc07    Garagentor Reversieren
+;I10.7  Garage Antr.licht   O10.7   Rf08    Garagentür
+;I10.8  · reserve ·         O10.8           · reserve ·
+;I10.9  · reserve ·         O10.9           · reserve ·
+;I10.A  · reserve ·         O10.A           · reserve ·
+;I10.B  · reserve ·         O10.B           · reserve ·
+;I10.C  · reserve ·         O10.C           · reserve ·
+;I10.D  · reserve ·         O10.D           · reserve ·
+;I10.E  · reserve ·         O10.E           · reserve ·
+;I10.F  · reserve ·         O10.F           Garage EinfahrLED
+; prescale+mode | output | input | device1 | delay(opt) | device2
+    de  0xb4,0x00,0x02,0x10,0x96        ; Garage Decke 1 - Garage C - 80min
+    de  0x74,0x00,0x01,0x10,0x96        ; Garage Decke 1 - Garage B - 5min
+    de  0x74,0x00,0x06,0x03,0x96        ; Garage Decke 1 - Windfang Tür B - 5min
+    de  0x68,0x00,0x07,0x10,0x96        ; Garage Decke 1 - Antrieb Licht - timer 2.5min
+    de  0x04,0x01,0x02,0x10             ; Garage Decke 2 - Garage C - toggle
+    de  0x74,0x01,0x01,0x10,0x81        ; Garage Decke 2 - Garage B - 4.5min
+    de  0x74,0x01,0x06,0x03,0x81        ; Garage Decke 2 - Windfang Tür B - 4.5min
+    de  0x68,0x01,0x07,0x10,0x96        ; Garage Decke 2 - Antrieb Licht - timer 2.5min
+    de  0x02,0x02                       ; Außen  Garage  - Dauer aus
+    de  0x02,0x03                       ; · reserve · - Dauer aus
+    de  0xb4,0x04,0x03,0x10,0xa9        ; Zysterne Pumpe - Garage D (oben) - 90min
+    de  0x01,0x05,0x05,0x04             ; Garagentor U/S/D - Küche Ost H
+    de  0x01,0x05,0x07,0x03             ; Garagentor U/S/D - Windfang Tür B
+    de  0x01,0x05,0x00,0x10             ; Garagentor U/S/D - Garage A
+    de  0x01,0x05,0x04,0x10             ; Garagentor U/S/D - Schlüsselschalter
+    de  0x01,0x05,0x01,0x06             ; Garagentor U/S/D - eKey O2
+    de  0x09,0x06,0x05,0x10,0x01,0x0d   ; Garagentor Lichtschranke
+    de  0x01,0x07,0x02,0x06             ; Garagentür - eKey 03
+    de  0x02,0x08                       ; · reserve · - Dauer aus
+    de  0x02,0x09                       ; · reserve · - Dauer aus
+    de  0x02,0x0a                       ; · reserve · - Dauer aus
+    de  0x02,0x0b                       ; · reserve · - Dauer aus
+    de  0x02,0x0c                       ; · reserve · - Dauer aus
+    de  0x02,0x0d                       ; · reserve · - Dauer aus
+    de  0x02,0x0e                       ; · reserve · - Dauer aus
+    de  0x49,0x0f,0x05,0x10,0x01,0x0d   ; Garage EinfahrLED - Garage Lichtschranke
+endif
+
+ 
 ; mode 0 - 1 exit
 ; mode 1 - 4 passthrough
 ; mode 2 - 2 always off
