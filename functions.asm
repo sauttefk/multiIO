@@ -392,11 +392,12 @@ fTimerR1        incf    paramPtr2,w
                 goto    dispatchCont    ;}
 
 fBlinker            ;{
-; blinker
+; blinker / inverted blinker
 ; toggles output with configurable frequency and duty cycle
 ; in:   rxDevID
 ; in:   rxInput
 ; in:   funcOutBits lower nibble
+; in:   funcTypeInput bit 4 (inverted mode)
 ; out:  outputLo &/| outputHi
 ; mod:  bitmaskLo
 ; mod:  bitmaskHi
@@ -420,10 +421,18 @@ fBlinker1:      btfss   rxInput,5       ; check for released key (negative edge)
 
                 incf    paramPtr2,w
                 pcall   clrDelay        ; clear delay timer
+                
+                btfsc   funcTypeInput,4 ; test for inverted mode
+                goto    fBlinkerOn
 
-                movfw   funcOutBits
+fBlinkerOff:    movfw   funcOutBits
                 pcall   genBitmask
                 outputOff               ; switch output off
+                goto    dispatchCont
+
+fBlinkerOn:     movfw   funcOutBits
+                pcall   genBitmask
+                outputOn                ; switch output on
                 goto    dispatchCont
 
 fBlinker2:      btfss   INDF,0
@@ -443,11 +452,7 @@ fBlinker3:      bsf     INDF,1
                 incf    paramPtr2,w
                 pcall   genDelayF       ; set up delay T1
 
-                movfw   funcOutBits
-                pcall   genBitmask
-                outputOn                ; switch output on
-
-                goto    dispatchCont
+                goto    fBlinkerOn
 
 fBlinker4:      bcf     INDF,1
 
@@ -459,11 +464,8 @@ fBlinker4:      bcf     INDF,1
                 incf    paramPtr2,w
                 pcall   genDelayF       ; set up delay T2
 
-                movfw   funcOutBits
-                pcall   genBitmask
-                outputOff               ; switch output off
+                goto    fBlinkerOff
 
-                goto    dispatchCont    ;}
 
 
 fAwning         ;{
