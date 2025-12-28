@@ -28,7 +28,7 @@ iTestTxIrq      btfss   PIR1,TXIF       ; test for serial transmit interrupt
 iTestTimer2     btfss   PIE1,TMR2IE     ; test if timer2 500Hz interrupt is enabled
                 goto    iExit           ; no, so exit ISR
                 bcf     STATUS,RP0      ; select SFR bank
-                btfss   PIR1,TMR2IF     ; test if timer2 rollover occured
+                btfss   PIR1,TMR2IF     ; test if timer2 rollover occurred
                 goto    iExit           ; no so exit isr
                 bcf     PIR1,TMR2IF     ; clear timer2 H/W flag
 
@@ -105,7 +105,7 @@ iSkipRx         ;{
                 movlw   (BUFSIZE)-1     ; BUFSIZE must be to the power of 2
                 andwf   rxGetPtr,f      ; mask read pointer to get easy wrap around
                 decf    rxNum,f         ; decrement number of bytes in ringbuffer
-                decf    skipRxCnt,f     ; decrent skip rx counter
+                decf    skipRxCnt,f     ; decrement skip rx counter
                 goto    iSkipRx         ;}
 
 
@@ -512,7 +512,7 @@ iQueueMsg       ;{
                 return                  ; discard if buffer full
 
                 movfw   msgPutPtr       ; current write pointer
-                addlw   LOW(msgBuf)     ; base adress of tx buffer
+                addlw   LOW(msgBuf)     ; base address of tx buffer
                 movwf   FSR             ; set FSR to current write position
                 bankisel    msgBuf
                 movff   iInputLo,INDF   ; store into ringbuffer
@@ -561,7 +561,7 @@ iTxHandler      ;{
                 bz      iTxHandler1
 
                 movfw   txGetPtr        ; current read pointer
-                addlw   LOW(txBuf)      ; base adress of tx buffer
+                addlw   LOW(txBuf)      ; base address of tx buffer
                 movwf   FSR             ; set FSR to current read position
                 bankisel    txBuf
                 movfw   INDF            ; store get char from ringbuffer
@@ -573,7 +573,7 @@ iTxHandler      ;{
                 decf    txNum,f         ; increment number of bytes in ringbuffer
                 return
 
-iTxHandler1     movlw   PIE1            ; get adress for tx irq enable
+iTxHandler1     movlw   PIE1            ; get address for tx irq enable
                 movwf   FSR             ; setup fsr
                 bcf     INDF,TXIE       ; and disable tx irq
                 return  ;}
@@ -585,9 +585,9 @@ iRxHandler  ;{
 
                 banksel RCSTA
                 btfss   RCSTA,OERR      ; test for overrun error
-                goto    rxCheckFraming  ; when overrun, uart will stop receving the continous
-                                        ; recevive bit must then be reset
-                bcf     RCSTA,CREN      ; clear continous receive bit
+                goto    rxCheckFraming  ; when overrun, uart will stop receiving the continuous
+                                        ; receive bit must then be reset
+                bcf     RCSTA,CREN      ; clear continuous receive bit
                 bsf     RCSTA,CREN      ; and set it again
 
 rxCheckFraming
@@ -600,7 +600,7 @@ rxCheckBuffer
                 bz      rxBufferFull
 
                 movfw   rxPutPtr        ; current write pointer
-                addlw   LOW(rxBuf)      ; base adress of tx buffer
+                addlw   LOW(rxBuf)      ; base address of rx buffer
                 movwf   FSR             ; set FSR to current write position
                 bankisel    rxBuf
                 movff   RCREG,INDF      ; store char into ringbuffer

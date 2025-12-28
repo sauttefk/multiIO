@@ -237,10 +237,10 @@ initPorts       ;{
 
 clearRam        ;{
 ;  clearRam - Reset all general purpose ram to 0s
-;  Note ! does not clear watchdog, add CLRWDT where appropiate if enabled
+;  Note ! does not clear watchdog, add CLRWDT where appropriate if enabled
                 bcf     STATUS,RP0
                 bcf     STATUS,RP1
-                bcf     STATUS,IRP      ; select bank0/1 ( with indirect adressing )
+                bcf     STATUS,IRP      ; select bank0/1 ( with indirect addressing )
                 movlw   0x20            ; start ram bank0
                 movwf   FSR
 clearBank0      clrf    INDF            ; Clear a register pointed to be FSR
@@ -259,7 +259,7 @@ clearBank1      clrf    INDF            ; Clear a register pointed to be FSR
 
 clearRam2       bcf     STATUS,RP0
                 bsf     STATUS,RP1
-                bsf     STATUS,IRP      ; select bank2/3 ( with indirect adressing )
+                bsf     STATUS,IRP      ; select bank2/3 ( with indirect addressing )
 
                 movlw   0x20            ; start ram bank2
                 movwf   FSR
@@ -279,7 +279,7 @@ clearBank3      clrf    INDF            ; Clear a register pointed to be FSR
 
                 bcf     STATUS,RP0
                 bcf     STATUS,RP1
-                bcf     STATUS,IRP      ; select bank0/1 ( with indirect adressing )
+                bcf     STATUS,IRP      ; select bank0/1 ( with indirect addressing )
 
                 return  ;}
 
@@ -304,11 +304,11 @@ initUart        ;{
                 banksel TXSTA
                 movwf   TXSTA
 
-                ; enable recevier
+                ; enable receiver
  if bits89 == 9
-                movlw   (1<<SPEN)|(1<<CREN)|(1<<RX9)    ; enable serial receiver, continous recevie, 9 bit
+                movlw   (1<<SPEN)|(1<<CREN)|(1<<RX9)    ; enable serial receiver, continuous receive, 9 bit
  else
-                movlw   (1<<SPEN)|(1<<CREN)             ; enable serial receiver, continous recevie, 8 bit
+                movlw   (1<<SPEN)|(1<<CREN)             ; enable serial receiver, continuous receive, 8 bit
  endif
                 banksel RCSTA
                 movwf   RCSTA           ; set it
@@ -332,7 +332,7 @@ initTimer0      ;{
 initTimer1      ;{
 ;  initTimer1 - Initialises Timer1 module
                 banksel T1CON
-                movlw   T1CON           ; get adress for timer1 control reg
+                movlw   T1CON           ; get address for timer1 control reg
                 movwf   FSR             ; setup fsr
                 movlw   b'00110000'     ; 1:8 prescale, 100mS rollover
                 movwf   INDF            ; initialize Timer1
@@ -345,7 +345,7 @@ initTimer1      ;{
                 bsf     T1CON,TMR1ON    ; turn on Timer1 module
 
                 ; enable TIMER1 interrupt
-                movlw   PIE1            ; get adress for periphial irqs
+                movlw   PIE1            ; get address for peripheral irqs
                 movwf   FSR             ; setup fsr
                 bsf     INDF,TMR1IE     ; enable TIMER1 irq
                 bsf     INTCON,PEIE     ; and peripheral irq must also be enabled
@@ -357,7 +357,7 @@ initTimer2      ;{
 ;  postscaler 1:4 => 500Hz
                 banksel PR2
 ;                movlw   0xf9            ; 249 => 1:250
-		movlw   CALC_TIMER(.500)    ; 500Hz 
+		movlw   CALC_TIMER(.500)    ; 500Hz
                 movwf   PR2
                 banksel T2CON
                 movlw   0x19            ; 1:4 prescale ; 1:4 postscale; timer2 off

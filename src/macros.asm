@@ -42,13 +42,13 @@ tabj        macro
 ;   sets up the PCLATH register correctly
 ;   Offset must be in w-reg, offset 0 jumps to the next instr.
                 movwf   tabTemp         ; save wanted offset
-                movlw   LOW($+8)        ; get low adress ( of first instr. after macro )
+                movlw   LOW($+8)        ; get low address ( of first instr. after macro )
                 addwf   tabTemp,f       ; add offset
                 movlw   HIGH($+6)       ; get highest 5 bits ( of first instr. after macro )
                 skpnc                   ; page crossed ? ( 256 byte )
-                addlw   0x01            ; Yes add one to high adress
-                movwf   PCLATH          ; load high adress in latch
-                movf    tabTemp,w       ; get computed adress
+                addlw   0x01            ; Yes add one to high address
+                movwf   PCLATH          ; load high address in latch
+                movf    tabTemp,w       ; get computed address
                 movwf   PCL             ; And jump
                 endm    ;}
 
@@ -58,13 +58,13 @@ itabj           macro
 ;   sets up the PCLATH register correctly
 ;   Offset must be in w-reg, offset 0 jumps to the next instr.
                 movwf   iTabTemp        ; save wanted offset
-                movlw   LOW($+8)        ; get low adress ( of first instr. after macro )
+                movlw   LOW($+8)        ; get low address ( of first instr. after macro )
                 addwf   iTabTemp,f      ; add offset
                 movlw   HIGH($+6)       ; get highest 5 bits ( of first instr. after macro )
                 skpnc                   ; page crossed ? ( 256 byte )
-                addlw   0x01            ; Yes add one to high adress
-                movwf   PCLATH          ; load high adress in latch
-                movf    iTabTemp,w      ; get computed adress
+                addlw   0x01            ; Yes add one to high address
+                movwf   PCLATH          ; load high address in latch
+                movf    iTabTemp,w      ; get computed address
                 movwf   PCL             ; And jump
                 endm    ;}
 
@@ -75,8 +75,8 @@ longcall        macro   LABEL   ;{
 
                 local   DEST_HIGH, SOURCE_HIGH, DIFF_HIGH
 
-DEST_HIGH       set (HIGH(LABEL)&0x18)      ; save bits 4:5 of dest adress
-SOURCE_HIGH     set (HIGH($)&0x18)          ; --- || ---  source adress
+DEST_HIGH       set (HIGH(LABEL)&0x18)      ; save bits 4:5 of dest address
+SOURCE_HIGH     set (HIGH($)&0x18)          ; --- || ---  source address
 DIFF_HIGH       set DEST_HIGH ^ SOURCE_HIGH ; get difference ( XOR )
 
                 if  (DIFF_HIGH == 0) ; same page, SHOULD generate no extra code, delta 0 pages
@@ -119,8 +119,8 @@ scall           macro   LABEL   ;{
 ;   Resets PCLATH after call.
 ;   w-reg is left untouched.
                 local   DEST_HIGH, SOURCE_HIGH, DIFF_HIGH
-DEST_HIGH       set (HIGH(LABEL)&0x18)          ; save bits 4:5 of dest adress
-SOURCE_HIGH     set (HIGH($)&0x18)              ; --- || ---  source adress
+DEST_HIGH       set (HIGH(LABEL)&0x18)          ; save bits 4:5 of dest address
+SOURCE_HIGH     set (HIGH($)&0x18)              ; --- || ---  source address
 DIFF_HIGH       set DEST_HIGH ^ SOURCE_HIGH     ; get difference ( XOR )
 
                 if  (DIFF_HIGH == 0) ; same page, SHOULD generate no extra code, delta 0 pages
@@ -150,8 +150,8 @@ pcall           macro   LABEL   ;{
 ;   Pcall page call, code for calling on same page
 ;   outputs messages if LONG/SHORT call could/must be used
                 local   DEST_HIGH, SOURCE_HIGH, DIFF_HIGH
-DEST_HIGH       set (HIGH(LABEL)&0x18)          ; save bits 4:5 of dest adress
-SOURCE_HIGH     set (HIGH($)&0x18)              ; --- || ---  source adress
+DEST_HIGH       set (HIGH(LABEL)&0x18)          ; save bits 4:5 of dest address
+SOURCE_HIGH     set (HIGH($)&0x18)              ; --- || ---  source address
 DIFF_HIGH       set DEST_HIGH ^ SOURCE_HIGH     ; get difference ( XOR )
 
                 if  (DIFF_HIGH == 0) ; same page, call ok

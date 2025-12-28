@@ -15,11 +15,11 @@ actionbase      equ     $-PARAMBASE
 ; mode 2 - 2 always off
 ; mode 3 - 2 always on
 ; mode 4 - 4 toggle light
-; mode 5 - 4 light toogle dual outputs
+; mode 5 - 4 light toggle dual outputs
 ; mode 6 - 5 two stage light (output1: 1st stage output2 2nd stage)
 ; mode 7 - 1 nop
 ; mode 8 - 5 retriggerable timer
-; mode 9 - 5 stopable timer
+; mode 9 - 5 stoppable timer
 ; mode a - 1 nop
 ; mode b - 1 nop
 ; mode c - 1 nop
@@ -34,7 +34,7 @@ actionbase      equ     $-PARAMBASE
 ;I01.0  Technik Tür A       O01.0   Ra01    Technik Decke 1
 ;I01.1  Technik Tür B       O01.1   Ra02    Technik Decke 2
 ;I01.2  Treppe UG West A    O01.2   Ra03    Treppe UG Downlights
-;I01.3  Treppe UG West B    O01.3   Ra04    Treppe UG Unter Podest
+;I01.3  Treppe UG West B    O01.3   Ra04    Treppe UG unter Podest
 ;I01.4  Treppe UG Ost A     O01.4   Ra05    Treppe UG Wand West
 ;I01.5  Treppe UG Ost B     O01.5   Ra06    Treppe UG Wand Ost
 ;I01.6  Vorrat Tür A        O01.6   Ra07    Vorrat Decke 1
@@ -42,9 +42,9 @@ actionbase      equ     $-PARAMBASE
 ;I01.8  Hobby Tür B         O01.8   Ra09    Hobby Downlights 1
 ;I01.9  Hobby Tür C         O01.9   Ra10    Hobby Downlights 2
 ;I01.A  Hobby Tür D         O01.A   Ra11    Hobby · reserve ·
-;I01.B  Werkstatt Tür A     O01.B   Ra12    Werken Decke 1 (L1)
-;I01.C  Werkstatt Tür B     O01.C   Ra13    Werken Decke 2 (L2)
-;I01.D  Arbeiten Tür A      O01.D   Ra14    Werken Decke 3 (L3)
+;I01.B  Werkstatt Tür A     O01.B   Ra12    Werkstatt Decke 1 (L1)
+;I01.C  Werkstatt Tür B     O01.C   Ra13    Werkstatt Decke 2 (L2)
+;I01.D  Arbeiten Tür A      O01.D   Ra14    Werkstatt Decke 3 (L3)
 ;I01.E  Arbeiten Tür B      O01.E   Ra15    Arbeiten Downlights 1
 ;I01.F  Arbeiten Tür C      O01.F   Ra16    Arbeiten Downlights 2
 ; prescale+mode | output | input | device1 | delay(opt) | device2
@@ -74,9 +74,9 @@ actionbase      equ     $-PARAMBASE
     de  0x56,0x98,0x08,0x01,0x28        ; Hobby Downlights 1&2 - Hobby Tür B
     de  0x56,0x89,0x07,0x01,0x28        ; Hobby Downlights 2&1 - Hobby Tür A
     de  0x56,0x98,0x0c,0x01,0x28        ; Hobby Downlights 1& - Werkstatt Tür B
-    de  0x02,0x0a                       ; Hobby · reserve · - Dauer aus
-    de  0x56,0xcb,0x0b,0x01,0x28        ; Werken Decke 1&2 (L1&2) - Werkstatt Tür A
-    de  0x04,0x0d,0x0b,0x01             ; Werken Decke 3 (L3) - Werkstatt Tür A
+    de  0x02,0x0a                       ; Hobby · reserve · - daueraus
+    de  0x56,0xcb,0x0b,0x01,0x28        ; Werkstatt Decke 1&2 (L1&2) - Werkstatt Tür A
+    de  0x04,0x0d,0x0b,0x01             ; Werkstatt Decke 3 (L3) - Werkstatt Tür A
     de  0x04,0x0e,0x0f,0x01             ; Arbeiten Downlights 1 - Arbeiten Tür C
     de  0x04,0x0f,0x00,0x02             ; Arbeiten Downlights 2 - Arbeiten Tür D
  endif
@@ -162,8 +162,8 @@ actionbase      equ     $-PARAMBASE
     de  0x74,0x06,0x06,0x03,0x96        ; Windfang Tür LED 1 - Garage Decke 1 - Windfang Tür B - 5min
     de  0x68,0x01,0x07,0x10,0x96        ; Garage Decke 2 - Antrieb Licht - timer 2.5min
     de  0x39,0x07,0x16,0x10,0x02,0x20   ; Windfang Tür LED 2 - Garagentor offen blink inverse
-    de  0xb4,0x08,0x08,0x03,0xe1        ; Windfang Tür LED 3 - Windfang Tür C - Kontrolle Außen NO - 120min
-    de  0xb4,0x09,0x09,0x03,0xe1        ; Windfang Tür LED 4 - Windfang Tür D - Kontrolle Außen Eingang - 120min
+    de  0xb4,0x08,0x08,0x03,0xe1        ; Windfang Tür LED 3 - Windfang Tür C - Kontrolle außen NO - 120min
+    de  0xb4,0x09,0x09,0x03,0xe1        ; Windfang Tür LED 4 - Windfang Tür D - Kontrolle außen Eingang - 120min
     de  0x04,0x0a,0x09,0x0f             ; Wohnen Wand Ost-Nord - Wohnen Süd J
     de  0x04,0x0b,0x08,0x0f             ; Wohnen Wand Ost-Süd - Wohnen Süd K
     de  0xa4,0x0c,0x07,0x07,0xe1        ; Schrank Downlights - Schrank Tür A 60min
@@ -259,8 +259,8 @@ actionbase      equ     $-PARAMBASE
     de  0x02,0x0d                       ; Kind 1 Wand Südost - Dauer aus
     de  0xc4,0x0e,0x01,0x0b,0xe1        ; Kind 1 Wand Bett - Kind 1 Tür B - 240min
     de  0xc4,0x0e,0x09,0x0b,0xe1        ; Kind 1 Wand Bett - Kind 1 Tür B - 240min
-    de  0xc4,0x0f,0x02,0x0b,0xe1        ; Kind 1 Steckdoese Ost - Kind 1 Tür C - 240min
-    de  0xc4,0x0f,0x0a,0x0b,0xe1        ; Kind 1 Steckdoese Ost - Kind 1 Tür C - 240min
+    de  0xc4,0x0f,0x02,0x0b,0xe1        ; Kind 1 Steckdose Ost - Kind 1 Tür C - 240min
+    de  0xc4,0x0f,0x0a,0x0b,0xe1        ; Kind 1 Steckdose Ost - Kind 1 Tür C - 240min
  endif
 
 
@@ -323,8 +323,8 @@ actionbase      equ     $-PARAMBASE
 ;I07.8  Elternbad Tür A     O07.8           Elternbad   Tür LED 2
 ;I07.9  Elternbad Tür B     O07.9   Rc16    Südterrasse Wand Süd
 ;I07.A  Elternbad Tür C     O07.A   Rc17    Südterrasse Steckdose
-;I07.B  Elternbad Tür D     O07.B   Rc18    Nordterrase Wand N/O
-;I07.C  Elternbad Tür E     O07.C   Rc19    Nordterrase Steckdose
+;I07.B  Elternbad Tür D     O07.B   Rc18    Nordterrasse Wand N/O
+;I07.C  Elternbad Tür E     O07.C   Rc19    Nordterrasse Steckdose
 ;I07.D  Elternbad Tür F     O07.D   Rc20    Außen   Nord
 ;I07.E  Elternbad Tür G     O07.E   Rc21    Außen   Nordost
 ;I07.F  Elternbad Tür H     O07.F   Rc22    Außen   Garage
@@ -334,7 +334,7 @@ actionbase      equ     $-PARAMBASE
     de  0x04,0x01,0x07,0x0d             ; Kind 3  Wand Bett - Kind3 Tür H
     de  0x04,0x01,0x0f,0x0d             ; Kind 3  Wand Bett - Kind3 Bett H
     de  0x02,0x02                       ; Kind 3  · reserve · - Dauer aus
-    de  0xb4,0x03,0x00,0x0e,0xe1        ; Abstellkammer Decke - Abstellk. Tür A - 120min
+    de  0xb4,0x03,0x00,0x0e,0xe1        ; Abstellkammer Decke - Abstellkammer Tür A - 120min
     de  0xb4,0x04,0x01,0x0e,0xe1        ; untere Bühne Decke - untere Bühne Tür A - 120min
     de  0xb4,0x05,0x02,0x0e,0xe1        ; obere Bühne Decke - obere Bühne Tür A - 120min
     de  0xb4,0x06,0x09,0x03,0xe1        ; Außen Wa Eingang - Windfang Tür D - 120min
@@ -366,7 +366,7 @@ actionbase      equ     $-PARAMBASE
 ;I08.B  Eltern Bett NW D    O08.B           Eltern Bett NW LED 4
 ;I08.C  Eltern Bett NW E    O08.C   Rc23    Garage  Decke 1
 ;I08.D  Eltern Bett NW F    O08.D   Rc24    Garage  Decke 2
-;I08.E  Eltern Bett NW G    O08.E   Rc25    Zysterne Pumpe
+;I08.E  Eltern Bett NW G    O08.E   Rc25    Zisterne Pumpe
 ;I08.F  Eltern Bett NW H    O08.F   Rc26    · reserve ·
 ; prescale+mode | output | input | device1 | delay(opt) | device2
     de  0x02,0x00                       ; Eltern Tür LED 1 - Dauer aus
@@ -388,7 +388,7 @@ actionbase      equ     $-PARAMBASE
     de  0x74,0x0d,0x04,0x0e,0x81        ; Garage Decke 2 - Garage B - 4.5min
     de  0x74,0x0d,0x06,0x03,0x81        ; Garage Decke 2 - Windfang Tür B - 4.5min
     de  0x64,0x0d,0x0A,0x0e,0x96        ; Garage Decke 2 - Antrieb Licht - 2.5min
-    de  0xb4,0x0e,0x06,0x0e,0xa9        ; Pumpe Zysterne - Garage D (oben) - 90min
+    de  0xb4,0x0e,0x06,0x0e,0xa9        ; Pumpe Zisterne - Garage D (oben) - 90min
     de  0x02,0x0f                       ; Rc26 · reserve · -  Dauer aus
  endif
 
@@ -404,7 +404,7 @@ actionbase      equ     $-PARAMBASE
 ;I09.6  Eltern Bett NO G    O09.6   Rc29    · reserve ·
 ;I09.7  Eltern Bett NO H    O09.7   Rc30    · reserve ·
 ;I09.8  Treppe OG Ost A     O09.8   Oc01    Garagentor Up/Stop/Down
-;I09.9  Treppe OG Ost B     O09.9   Oc02    Garagentor Reversieren
+;I09.9  Treppe OG Ost B     O09.9   Oc02    Garagentor reversieren
 ;I09.A  Treppe OG Ost C     O09.A   Oc03    Garagentür
 ;I09.B  Treppe OG Ost D     O09.B           · reserve ·
 ;I09.C  Flur OG Süd A       O09.C   Rd01    J Küche Ost Power
@@ -635,7 +635,7 @@ actionbase      equ     $-PARAMBASE
 
  if device == 0x0e
 ;Input  Raum Position       Output  Relais  Raum Position
-;I0E.0  Abstellk. Tür A     O0E.0   Rd21    F Flur OG SO zu
+;I0E.0  Abstellkammer Tür A O0E.0   Rd21    F Flur OG SO zu
 ;I0E.1  untere Bühne Tür A  O0E.1   Re21    F Flur OG SO auf
 ;I0E.2  obere Bühne Tür A   O0E.2   Rd22    F Flur OG S zu
 ;I0E.3  · reserve ·         O0E.3   Rd23    F Flur OG S auf
@@ -722,7 +722,7 @@ actionbase      equ     $-PARAMBASE
 ;I10.1  Garage B            O10.1   Rf02    Garage  Decke 2
 ;I10.2  Garage C            O10.2   Rf03    Außen   Garage
 ;I10.3  Garage D            O10.3   Rf04    · reserve ·
-;I10.4  Garage Schlüssel    O10.4   Rf05    Zysterne Pumpe
+;I10.4  Garage Schlüssel    O10.4   Rf05    Zisterne Pumpe
 ;I10.5  Garage Lichtschr.   O10.5   Rf06    Garagentor Up/Stop/Down
 ;I10.6  Garage Endposition  O10.6   Oc07    Garagentor Reversieren
 ;I10.7  Garage Antr.licht   O10.7   Rf08    Garagentür
@@ -745,7 +745,7 @@ actionbase      equ     $-PARAMBASE
     de  0x68,0x01,0x07,0x10,0x96        ; Garage Decke 2 - Antrieb Licht - timer 2.5min
     de  0x02,0x02                       ; Außen  Garage  - Dauer aus
     de  0x02,0x03                       ; · reserve · - Dauer aus
-    de  0xb4,0x04,0x03,0x10,0xa9        ; Zysterne Pumpe - Garage D (oben) - 90min
+    de  0xb4,0x04,0x03,0x10,0xa9        ; Zisterne Pumpe - Garage D (oben) - 90min
     de  0x01,0x05,0x05,0x04             ; Garagentor U/S/D - Küche Ost H
     de  0x01,0x05,0x07,0x03             ; Garagentor U/S/D - Windfang Tür B
     de  0x01,0x05,0x00,0x10             ; Garagentor U/S/D - Garage A
@@ -763,13 +763,13 @@ actionbase      equ     $-PARAMBASE
     de  0x49,0x0f,0x05,0x10,0x01,0x0d   ; Garage EinfahrLED - Garage Lichtschranke
 endif
 
- 
+
 ; mode 0 - 1 exit
 ; mode 1 - 4 passthrough
 ; mode 2 - 2 always off
 ; mode 3 - 2 always on
 ; mode 4 - 4 toggle light
-; mode 5 - 4 light toogle dual outputs
+; mode 5 - 4 light toggle dual outputs
 ; mode 6 - 5 two stage light (output1: 1st stage output1+2 2nd stage)
 ; mode 7 - 1 nop
 ; mode 8 - 5 retriggerable timer

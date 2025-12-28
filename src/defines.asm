@@ -8,10 +8,10 @@ DEFINES         ;{
                     ERROR "MSGBUFSIZE MUST BE A POWER OF 2"
                 ENDIF
 
-; caulculates baudrate when BRGH = 1, adjust for rounding errors (XTAL_FREQ / (16 * BaudRate)) - 0.5
+; calculates baudrate when BRGH = 1, adjust for rounding errors (XTAL_FREQ / (16 * BaudRate)) - 0.5
 #define         CALC_HIGH_BAUD(BaudRate)    (XTAL_FREQ + .8 * BaudRate) / (.16 * BaudRate) - .1;
 
-		; caulculates timer1 delay when prescale is 1:4, postscale is 1:4
+		; calculates timer1 delay when prescale is 1:4, postscale is 1:4
 ;#define         CALC_TIMER(TickTime)    (0xFFFF - ((TickTime * XTAL_FREQ) / .32000)) + .1
 #define		CALC_TIMER(TickTime)	(XTAL_FREQ / .64 / TickTime) - .1
 
@@ -35,7 +35,7 @@ DEFINES         ;{
 ; mode 2 - 2 always off
 ; mode 3 - 2 always on
 ; mode 4 - 4 toggle light
-; mode 5 - 4 light toogle dual outputs
+; mode 5 - 4 light toggle dual outputs
 ; mode 6 - 5 two stage light (output1: 1st stage output1+2 2nd stage)
 ; mode 7 - 1 nop
 ; mode 8 - 5 retriggerable timer

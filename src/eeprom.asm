@@ -8,7 +8,7 @@ eeWrite ;{
 eeWrite_1:      btfsc   EECON1,WR       ; wait for last write to complete
                 goto    eeWrite_1
                 bcf     STATUS,RP0      ; select bank 2
-                movwf   EEADR           ; setup adress
+                movwf   EEADR           ; setup address
                 banksel eeByte
                 movfw   eeByte          ; get byte
                 banksel EEDATA

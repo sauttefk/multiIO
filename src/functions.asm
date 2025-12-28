@@ -100,7 +100,7 @@ fToggleS4       incf    paramPtr2,w
 
                 incf    paramPtr2,w
                 pcall   chkDelay
-                bz      dispatchCont    ; continue if delay timer alreay cleared
+                bz      dispatchCont    ; continue if delay timer already cleared
 
                 movfw   paramPtr2
                 movwf   FSR
@@ -196,7 +196,7 @@ fToggleDual4    incf    paramPtr2,w
 
                 incf    paramPtr2,w
                 pcall   chkDelay
-                bz      fToggleDual5    ; continue if delay timer alreay cleared
+                bz      fToggleDual5    ; continue if delay timer already cleared
 
                 incf    paramPtr2,w
                 pcall   clrDelay        ; clear delay timer
@@ -211,7 +211,7 @@ fToggleDual5    incf    paramPtr3,w
 
                 incf    paramPtr3,w
                 pcall   chkDelay
-                bz      dispatchCont    ; continue if delay timer alreay cleared
+                bz      dispatchCont    ; continue if delay timer already cleared
 
                 incf    paramPtr3,w
                 pcall   clrDelay        ; clear delay timer
@@ -337,7 +337,7 @@ fTwoStage7      movfw   funcOutBits
 
 fTimerR         ;{
 ; retriggerable timer
-; ouptut is turned on until delay time has elapsed
+; output is turned on until delay time has elapsed
 ; in:   rxDevID
 ; in:   rxInput
 ; in:   funcOutBits lower nibble
@@ -372,7 +372,7 @@ fTimerRa        btfsc   funcSemaphore,0 ; check for lights on
 
                 incf    paramPtr2,w
                 pcall   chkDelay
-                bz      dispatchCont    ; continue if delay timer alreay cleared
+                bz      dispatchCont    ; continue if delay timer already cleared
 
 fTimerR0        movfw   funcOutBits
                 pcall   genBitmask
@@ -421,7 +421,7 @@ fBlinker1:      btfss   rxInput,5       ; check for released key (negative edge)
 
                 incf    paramPtr2,w
                 pcall   clrDelay        ; clear delay timer
-                
+
                 btfsc   funcTypeInput,4 ; test for inverted mode
                 goto    fBlinkerOn
 

@@ -6,7 +6,7 @@ putTx1          movfw   txNum
                 bz      putTx1          ; wait for free space
 
                 movfw   txPutPtr        ; current write pointer
-                addlw   LOW(txBuf)      ; base adress of tx buffer
+                addlw   LOW(txBuf)      ; base address of tx buffer
                 movwf   FSR             ; set FSR to current write position
                 bankisel    txBuf
                 movff   temp1,INDF      ; store char into ringbuffer
@@ -14,7 +14,7 @@ putTx1          movfw   txNum
                 movlw   (BUFSIZE)-1     ; BUFSIZE must be to the power of 2
                 andwf   txPutPtr,f      ; mask write pointer to get easy wrap around
                 incf    txNum,f         ; increment number of bytes in ringbuffer
-                movlw   PIE1            ; get adress for periphial irq
+                movlw   PIE1            ; get address for peripheral irq
                 movwf   FSR             ; setup fsr
                 bsf     INDF,TXIE       ; and enable tx irq
                 return  ;}
@@ -26,8 +26,8 @@ getRx           ;{
                 movfw   rxNum           ; check if there is a character in the ringbuffer
                 bz      getRx1
 
-                movfw   rxGetPtr        ; curret read pointer
-                addlw   LOW(rxBuf)      ; base adress of rx buffer
+                movfw   rxGetPtr        ; current read pointer
+                addlw   LOW(rxBuf)      ; base address of rx buffer
                 movwf   FSR             ; set FSR to current read position
                 bankisel    rxBuf
                 incf    rxGetPtr,f      ; increment read pointer

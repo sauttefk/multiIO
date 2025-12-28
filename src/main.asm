@@ -1,11 +1,14 @@
 ;******************************************************************************
 ; turn off crossing page boundary message
-    ERRORLEVEL -306, -302
+   ; ERRORLEVEL -306, -302
 
 #define         revision    4
+; Device ID can be overridden with -D device=0xXX
+#ifndef device
 #define         device      0x01
+#endif
 #define         bits89      8
-#define         baudrate    .38400    
+#define         baudrate    .38400
 ;#define         baudrate    .115200
 
  ifdef  __DEBUG
@@ -16,11 +19,11 @@
  endif
 
 
-#include        <p16F946.inc>
+#include        <p16f946.inc>
 
-#include        <defines.asm>
-#include        <variables.asm>
-#include        <macros.asm>
+#include        "defines.asm"
+#include        "variables.asm"
+#include        "macros.asm"
 
 ;**********************************************************************
                 org     0x000           ; processor reset vector
@@ -28,22 +31,22 @@
                 lgoto   main            ; go to initialisation of program
 
 ;**************** Interrupt service routine **************************
-                org     0x004           ; interrupt vector locaton
-#include        <interrupt.asm>
+                org     0x004           ; interrupt vector location
+#include        "interrupt.asm"
                 ;{
                 org     0x0800          ; second page
 main
                 clrf    STATUS          ; ensure we are at bank0
                 clrf    INTCON          ; ensure int reg is clear
-                clrf    PIR1            ; clear periphial irqs
+                clrf    PIR1            ; clear peripheral irqs
                 clrf    PIR2            ; dito
 
                 ; make sure all individual irqs are disabled
-                movlw   PIE1            ; get adress for peripheral irq enable
+                movlw   PIE1            ; get address for peripheral irq enable
                 movwf   FSR             ; setup fsr
                 clrf    INDF            ; and clear irq enable flags
 
-                movlw   PIE2            ; get adress for second peripheral irq enable
+                movlw   PIE2            ; get address for second peripheral irq enable
                 movwf   FSR             ; setup fsr
                 clrf    INDF            ; and clear irq enable flags
 
@@ -100,9 +103,11 @@ main
 #define         XTAL_FREQ   .8000000	; OSC freq in Hz
 #endif
 #endif
- messg   Selected CPU Frequency : XTAL_FREQ MHz
+; TODO: Fix messg directive syntax
+; messg   Selected CPU Frequency : XTAL_FREQ MHz
  #define rate	CALC_HIGH_BAUD(baudrate)
- messg   rate
+; TODO: Fix messg directive syntax
+; messg   rate
 
                 scall   initPorts
                 scall   clearRam
@@ -282,7 +287,7 @@ mainLoop1
                 bz      mainLoop2       ; queue is empty
 
                 movfw   msgGetPtr       ; current queue read pointer
-                addlw   LOW(msgBuf)     ; base adress of message buffer queue
+                addlw   LOW(msgBuf)     ; base address of message buffer queue
                 bankisel    msgBuf
                 movwf   FSR             ; set FSR to current queue read position
                 movff   INDF,msgLo      ; get
@@ -318,7 +323,7 @@ genMessage1     incf    msgID,F
                 goto    genMessage1
 
 genMessage2     movfw   msgGetPtr       ; current read pointer
-                addlw   LOW(msgBuf)     ; base adress of message buffer
+                addlw   LOW(msgBuf)     ; base address of message buffer
                 movwf   FSR             ; set FSR to current read position
                 movfw   INDF
                 xorlw   0xff
@@ -376,16 +381,15 @@ powerDown       disableirq
 endless         goto    parseRx         ;}
 
 
-#include        <dispatch.asm>
-#include        <functions.asm>
-#include        <uberfunctions.asm>
-#include        <serial.asm>
-#include        <utils.asm>
-#include        <eeprom.asm>
+#include        "dispatch.asm"
+#include        "functions.asm"
+#include        "uberfunctions.asm"
+#include        "serial.asm"
+#include        "utils.asm"
+#include        "eeprom.asm"
                 org     0x1800          ; third page
-#include        <init.asm>
-#include        <parameter.asm>
-                end
+#include        "init.asm"
+#include        "parameter.asm"
 
 ;
 ;           PIC16CXX SPECIAL INSTRUCTION MNEMONICS
@@ -431,3 +435,4 @@ endless         goto    parseRx         ;}
 ;Call across page boundary  LCALL k     BCF 3,5 or BSF 3,5
 ;                                       BCF 3,6 or BSF 3,6
 ;                                       CALL     k
+                end

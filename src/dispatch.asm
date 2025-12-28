@@ -63,7 +63,7 @@ dispatchLoop2   movfw   temp1           ; number of eeprom parameters
                 bz      dispatchLoop5   ; already got 2 parameters
 
                 btfsc   funcUber,6      ; test if in service mode
-                goto    dispatchLoop4   ; we are in service mode => no device id parameters nedded
+                goto    dispatchLoop4   ; we are in service mode => no device id parameters needed
 
                 movlw   input           ; get input ports for later match
                 addwf   paramPtr1,w
@@ -123,7 +123,7 @@ dispatchLoop5   movfw   funcPrescMode
                 goto    fAlwaysOff      ; mode 2 - always off
                 goto    fAlwaysOn       ; mode 3 - always on
                 goto    fToggle         ; mode 4 - toggle light
-                goto    fToggleDual     ; mode 5 - light toogle dual outputs
+                goto    fToggleDual     ; mode 5 - light toggle dual outputs
                 goto    fTwoStage       ; mode 6 - two stage light (output1: 1st stage output2 2nd stage)
                 return                  ; mode 7 - nop
                 goto    fTimerR         ; mode 8 - retriggerable timer
@@ -154,7 +154,7 @@ numParameter    clrf    temp2
                 retlw   0x02            ; mode 2 - always off
                 retlw   0x02            ; mode 3 - always on
                 retlw   0x04            ; mode 4 - toggle light
-                retlw   0x04            ; mode 5 - light toogle dual outputs
+                retlw   0x04            ; mode 5 - light toggle dual outputs
                 retlw   0x04            ; mode 6 - two stage light (output1: 1st stage output2 2nd stage)
                 retlw   0x00            ; mode 7 - nop
                 retlw   0x05            ; mode 8 - retriggerable timer
@@ -171,7 +171,7 @@ numParameter    clrf    temp2
                 retlw   0x02            ; mode 2+ - always off
                 retlw   0x02            ; mode 3+ - always on
                 retlw   0x05            ; mode 4+ - toggle light
-                retlw   0x05            ; mode 5+ - light toogle dual outputs
+                retlw   0x05            ; mode 5+ - light toggle dual outputs
                 retlw   0x05            ; mode 6+ - two stage light (output1: 1st stage output2 2nd stage)
                 retlw   0x00            ; mode 7+ - nop
                 retlw   0x05            ; mode 8+ - retriggerable timer
