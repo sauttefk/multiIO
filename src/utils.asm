@@ -83,13 +83,13 @@ genDelayF       ;{
                 addlw   2               ; smallest interval 1/250 second
                 goto    genDelay0
 
-genDelay:       movwf   FSR             ; normal entry point
+genDelay        movwf   FSR             ; normal entry point
                 movfw   funcDelay
                 movwf   temp1
                 swapf   funcPrescMode,w
                 andlw   0x0f
                 addlw   4               ; smallest interval 1/62.5 second
-genDelay0:      clrf    temp2
+genDelay0       clrf    temp2
                 clrf    temp3
                 clrf    temp4
                 clrf    temp5
